@@ -1,0 +1,10 @@
+videos/
+*.webm
+*.mp4
+*.pt
+*.pth
+model/
+data/
+.venv/
+node_modules/
+dist/
