@@ -1,4 +1,4 @@
-![JINRO IS Logo](frontend/src/assets/logo/main_logo.png)
+![JINRO IS Logo](./JINRO_PROJ/frontend/src/assets/logo/main_logo.png)
 
 # 🏆 JINRO IS - AI 기반 진로 상담 플랫폼
 > **학생의 감정, 집중도, 설문조사, 상담 대화를 진로 리포트로 연결하는 AI 보조형 진로 상담 서비스**
