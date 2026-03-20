@@ -322,8 +322,8 @@ async def run_full_analysis(request: AnalysisRequest):
 
 ## 🎥 데모 영상
 
-- 프로젝트 데모 영상 : [데모 영상 링크](https://example.com/demo)
-- 발표 자료: [PDF 링크](https://example.com/docs)
+- 프로젝트 데모 영상 : [데모 영상 링크] 추후 업로드 예정
+- 발표 자료: [PDF 링크] 추후 업로드 예정
 ---
 
 
