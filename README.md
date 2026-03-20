@@ -328,12 +328,12 @@ async def run_full_analysis(request: AnalysisRequest):
 
 
 
-### 로컬 실행 방법
+## 🚀 로컬 실행 방법
 
 이 프로젝트는 `frontend`, `backend`, `ai_server` 3개 프로세스로 실행됩니다.  
 Git에는 `.venv`와 `.env`가 포함되지 않으므로, 다른 PC에서 처음 실행할 때는 아래 준비가 필요합니다.
 
-#### 1. 사전 준비
+### 1. 사전 준비
 
 - Python 3.12
 - Node.js
@@ -348,7 +348,7 @@ Copy-Item JINRO_PROJ\backend\.env.example JINRO_PROJ\backend\.env
 Copy-Item JINRO_PROJ\ai_server\.env.example JINRO_PROJ\ai_server\.env
 ```
 
-#### 2. 최초 1회 설치
+### 2. 최초 1회 설치
 
 ```powershell
 python -m venv .venv
@@ -358,7 +358,7 @@ cd JINRO_PROJ\frontend
 npm install
 ```
 
-#### 3. 실행
+### 3. 실행
 
 가장 쉬운 방법은 프로젝트 루트에서 아래 파일을 실행하는 것입니다.
 
@@ -383,7 +383,7 @@ cd f:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\frontend
 npm run dev
 ```
 
-#### 4. 접속 주소
+### 4. 접속 주소
 
 실행 후 접속 주소는 아래와 같습니다.
 
@@ -391,7 +391,7 @@ npm run dev
 - Backend: `http://127.0.0.1:8000`
 - AI Server: `http://127.0.0.1:8001`
 
-#### 5. 참고 사항
+### 5. 참고 사항
 
 - Python 가상환경은 프로젝트 루트의 `.venv`를 사용합니다.
 - 데이터베이스 연결 정보는 `JINRO_PROJ/backend/.env`에 설정해야 합니다.
