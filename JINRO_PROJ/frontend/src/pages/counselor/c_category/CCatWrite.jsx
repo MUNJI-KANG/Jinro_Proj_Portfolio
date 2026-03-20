@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../../../css/counselor_css/CCatWrite.css";
-import api from '../../../services/app'
+import api from "../../../services/app";
 
 export default function CCatWrite() {
   const location = useLocation();
@@ -87,15 +87,9 @@ export default function CCatWrite() {
       let response;
 
       if (editData?.c_id) {
-        response = await api.put(
-          `http://127.0.0.1:8000/counselor/category/${editData.c_id}`,
-          payload
-        );
+        response = await api.put(`/counselor/category/${editData.c_id}`, payload);
       } else {
-        response = await api.post(
-          "http://127.0.0.1:8000/counselor/category",
-          payload
-        );
+        response = await api.post("/counselor/category", payload);
       }
 
       const data = await response.data;

@@ -1,49 +1,8 @@
-2026-03-18 09:33:50,696 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
-
-2026-03-18 09:36:27,297 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
-
-2026-03-18 10:19:33,623 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
-
-2026-03-18 10:50:18,884 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
-
-2026-03-18 12:41:04,727 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
-
-2026-03-18 12:48:38,024 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
-
-2026-03-18 13:46:09,381 [INFO] httpx: HTTP Request: POST http://127.0.0.1:8000/client/analysis/callback "HTTP/1.1 200 OK"
-2026-03-18 15:34:55,670 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-small/revision/main "HTTP/1.1 200 OK"
-2026-03-18 15:34:55,699 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-small/revision/main "HTTP/1.1 200 OK"
-2026-03-18 15:34:55,700 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-small/revision/main "HTTP/1.1 200 OK"
-2026-03-18 15:34:55,728 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-small/revision/main "HTTP/1.1 200 OK"
-2026-03-18 15:34:59,298 [INFO] faster_whisper: Processing audio with duration 05:00.032
-2026-03-18 15:34:59,931 [INFO] faster_whisper: Processing audio with duration 04:59.968
-2026-03-18 15:35:00,596 [INFO] faster_whisper: Processing audio with duration 05:00.032
-2026-03-18 15:35:00,626 [INFO] faster_whisper: Processing audio with duration 04:59.968
-2026-03-18 15:35:00,665 [INFO] faster_whisper: VAD filter removed 04:18.832 of audio
-2026-03-18 15:35:01,224 [INFO] faster_whisper: VAD filter removed 04:34.176 of audio
-2026-03-18 15:35:02,296 [INFO] faster_whisper: VAD filter removed 04:59.104 of audio
-2026-03-18 15:35:02,352 [INFO] faster_whisper: VAD filter removed 04:39.552 of audio
-2026-03-18 15:35:23,966 [INFO] faster_whisper: Processing audio with duration 03:49.860
-2026-03-18 15:35:24,814 [INFO] faster_whisper: VAD filter removed 00:57.664 of audio
-2026-03-18 15:37:29,904 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-03-18 15:37:34,524 [INFO] httpx: HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-03-18 15:51:04,604 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
-
-2026-03-18 16:26:45,397 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
-
-2026-03-18 17:34:46,090 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
-
-2026-03-18 17:34:46,299 [INFO] ai_server.router: 디바이스 설정 완료: cpu
-2026-03-18 17:34:46,558 [INFO] ai_server.router: 흥미도 예측 모델 가중치 로드 완료: F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\app\api\..\model\interest_classifier_best.pth
-2026-03-18 17:34:46,568 [INFO] ai_server.router: MediaPipe 얼굴 인식 모듈 초기화 완료
-2026-03-18 17:34:46,569 [INFO] ai_server.router: 💻 AI 서버 집중도 모델 로드 중... 디바이스: cpu
-2026-03-18 17:34:46,668 [INFO] ai_server.router: ✅ 집중도 모델 로드 완료!
-2026-03-18 17:34:46,669 [INFO] ai_server.router: GPU OOM 방지용 세마포어 설정 완료 (최대 동시 작업 수: 1)
-2026-03-18 18:03:52,029 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
-
-2026-03-18 18:03:52,369 [INFO] ai_server.router: 디바이스 설정 완료: cpu
-2026-03-18 18:03:52,672 [INFO] ai_server.router: 흥미도 예측 모델 가중치 로드 완료: F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\app\api\..\model\interest_classifier_best.pth
-2026-03-18 18:03:52,678 [INFO] ai_server.router: MediaPipe 얼굴 인식 모듈 초기화 완료
-2026-03-18 18:03:52,678 [INFO] ai_server.router: 💻 AI 서버 집중도 모델 로드 중... 디바이스: cpu
-2026-03-18 18:03:52,811 [INFO] ai_server.router: ✅ 집중도 모델 로드 완료!
-2026-03-18 18:03:52,812 [INFO] ai_server.router: GPU OOM 방지용 세마포어 설정 완료 (최대 동시 작업 수: 1)
+2026-03-20 10:33:43,743 [WARNING] ai_server.router: Interest model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
+2026-03-20 10:33:43,745 [WARNING] ai_server.router: Focus model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
+2026-03-20 11:35:16,413 [WARNING] ai_server.router: Interest model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
+2026-03-20 11:35:16,413 [WARNING] ai_server.router: Focus model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
+2026-03-20 11:36:22,174 [WARNING] ai_server.router: Interest model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
+2026-03-20 11:36:22,176 [WARNING] ai_server.router: Focus model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
+2026-03-20 12:14:25,394 [WARNING] ai_server.router: Interest model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
+2026-03-20 12:14:25,396 [WARNING] ai_server.router: Focus model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model

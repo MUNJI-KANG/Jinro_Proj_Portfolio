@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 
 import { useParams, useNavigate } from 'react-router-dom';
-import api from '../services/app';
+import api, { BACKEND_BASE_URL } from "../services/app";
 import styles from '../css/component_css/ReportAi.module.css';
 
 const ReportAi = ({ pageTitle, studentName }) => {
@@ -101,7 +101,7 @@ const ReportAi = ({ pageTitle, studentName }) => {
 
       if (!res.data.success) return;
 
-      const focusList = res.data.focus || [];
+      const focusList = res.data.table || [];
 
       if (focusList.length === 0) {
         setFinalScore(0);
@@ -109,7 +109,7 @@ const ReportAi = ({ pageTitle, studentName }) => {
       }
 
       const avg =
-        focusList.reduce((sum, v) => sum + v.value, 0) /
+        focusList.reduce((sum, v) => sum + (v.final_score || 0), 0) /
         focusList.length;
 
       setFinalScore(avg.toFixed(1));
@@ -128,7 +128,10 @@ const ReportAi = ({ pageTitle, studentName }) => {
 
       if (!res.data.success) return;
 
-      const focusList = res.data.focus || [];
+      const focusList = (res.data.table || []).map((item) => ({
+        subject: item.category,
+        value: item.final_score || 0,
+      }));
 
       setVideoScores(focusList);
 
@@ -167,7 +170,7 @@ const ReportAi = ({ pageTitle, studentName }) => {
 
   const handleSelectVideo = (url) => {
 
-    const final = `http://localhost:8000/videos/${url}`;
+    const final = `${BACKEND_BASE_URL}/videos/${url}`;
 
     setSelectedVideoUrl(final);
 

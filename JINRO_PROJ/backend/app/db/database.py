@@ -1,30 +1,44 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
-# ---------------------------------------------------------
-# [수정된 부분] MySQL 연결 URL 세팅
-# 형식: "mysql+pymysql://사용자이름:비밀번호@호스트:포트/DB이름"
-# ---------------------------------------------------------
+from dotenv import load_dotenv
+from sqlalchemy import create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ENV_PATH = os.path.normpath(os.path.join(BASE_DIR, "..", ".env"))
+load_dotenv(ENV_PATH)
+
 DB_USERNAME = os.getenv("DB_USERNAME")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
 DB_NAME = os.getenv("DB_NAME")
 
-SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+missing_env = [
+    key
+    for key, value in {
+        "DB_USERNAME": DB_USERNAME,
+        "DB_PASSWORD": DB_PASSWORD,
+        "DB_HOST": DB_HOST,
+        "DB_PORT": DB_PORT,
+        "DB_NAME": DB_NAME,
+    }.items()
+    if not value
+]
 
-# # SQLite에 있던 connect_args={"check_same_thread": False}는 제거합니다.
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+if missing_env:
+    missing = ", ".join(missing_env)
+    raise RuntimeError(f"Missing required database environment variables: {missing}")
 
-# # DB 세션 클래스 생성
+SQLALCHEMY_DATABASE_URL = (
+    f"mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+)
+
+engine = create_engine(SQLALCHEMY_DATABASE_URL, pool_pre_ping=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-# # ORM 모델의 기본 클래스
 Base = declarative_base()
+
 
 def get_db():
     db = SessionLocal()

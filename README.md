@@ -1,4 +1,4 @@
-![JINRO IS Logo](./JINRO_PROJ/frontend/src/assets/logo/main_logo.png)
+﻿![JINRO IS Logo](./JINRO_PROJ/frontend/src/assets/logo/main_logo.png)
 
 # 🏆 JINRO IS - AI 기반 진로 상담 플랫폼
 > **학생의 감정, 집중도, 설문조사, 상담 대화를 진로 리포트로 연결하는 AI 보조형 진로 상담 서비스**
@@ -327,37 +327,80 @@ async def run_full_analysis(request: AnalysisRequest):
 ---
 
 
-### 4. Run
 
-```bash
-# terminal 1
-cd backend
-python run.py
+### 로컬 실행 방법
+
+이 프로젝트는 `frontend`, `backend`, `ai_server` 3개 프로세스로 실행됩니다.  
+Git에는 `.venv`와 `.env`가 포함되지 않으므로, 다른 PC에서 처음 실행할 때는 아래 준비가 필요합니다.
+
+#### 1. 사전 준비
+
+- Python 3.12
+- Node.js
+- MySQL
+- `JINRO_PROJ/backend/.env`
+- `JINRO_PROJ/ai_server/.env`
+
+`.env` 파일은 각 폴더의 `.env.example`을 복사해서 작성할 수 있습니다.
+
+```powershell
+Copy-Item JINRO_PROJ\backend\.env.example JINRO_PROJ\backend\.env
+Copy-Item JINRO_PROJ\ai_server\.env.example JINRO_PROJ\ai_server\.env
 ```
 
-```bash
-# terminal 2
-cd ai_server
-python run.py
+#### 2. 최초 1회 설치
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r JINRO_PROJ\backend\requirements.txt
+.\.venv\Scripts\python.exe -m pip install -r JINRO_PROJ\ai_server\requirements.txt
+cd JINRO_PROJ\frontend
+npm install
 ```
 
-```bash
-# terminal 3
-cd frontend
+#### 3. 실행
+
+가장 쉬운 방법은 프로젝트 루트에서 아래 파일을 실행하는 것입니다.
+
+```bat
+run_local.bat
+```
+
+수동 실행이 필요하면 터미널 3개에서 각각 실행합니다.
+
+```powershell
+cd f:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\backend
+..\..\.venv\Scripts\python.exe run.py
+```
+
+```powershell
+cd f:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server
+..\..\.venv\Scripts\python.exe run.py
+```
+
+```powershell
+cd f:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\frontend
 npm run dev
 ```
 
-기본 실행 주소:
+#### 4. 접속 주소
+
+실행 후 접속 주소는 아래와 같습니다.
 
 - Frontend: `http://localhost:5173`
 - Backend: `http://127.0.0.1:8000`
 - AI Server: `http://127.0.0.1:8001`
 
+#### 5. 참고 사항
 
+- Python 가상환경은 프로젝트 루트의 `.venv`를 사용합니다.
+- 데이터베이스 연결 정보는 `JINRO_PROJ/backend/.env`에 설정해야 합니다.
+- AI 요약 및 분석 관련 설정은 `JINRO_PROJ/ai_server/.env`에 설정해야 합니다.
+- AI 모델 파일이 없으면 서버는 실행되지만 일부 분석 기능은 제한될 수 있습니다.
 ## Closing
 
-`JINRO IS`는 AI 기능을 붙인 화면 데모가 아니라,  
-학생 진단부터 상담사 리포트 작성까지 이어지는 **실무형 진로 상담 워크플로우**를 구현한 프로젝트입니다.
+`너, 내 진로가 되라`는 단순히 AI 기능을 덧붙인 데모가 아니라, 학생 진단 데이터, 상담 대화, 비디오 분석 결과를 하나의 상담 리포트로 연결하는 end-to-end 진로 상담 시스템입니다.
 
-저는 이 프로젝트에서 **서비스 흐름 설계, 프론트엔드 사용자 경험, FastAPI 기반 백엔드 구조화, AI 서버 연동, 문서형 결과물 자동화**를 한 번에 다뤘고,  
-그 과정 자체를 포트폴리오로 보여주고 싶었습니다.
+이 프로젝트에서 저는 FastAPI 기반 백엔드 구조화, AI 추론 서버 분리, 음성 STT 및 영상 분석 파이프라인 연동, 프론트엔드 사용자 흐름 설계, 결과 리포트 자동화까지 제품 관점에서 전체 흐름을 연결했습니다.
+
+특히 모델 성능 자체만이 아니라, AI가 실제 서비스 안에서 어떤 입력을 받고 어떤 형태의 결과로 소비되어야 하는지까지 설계하고 구현했다는 점을 이 포트폴리오의 핵심 가치로 두고 있습니다.
