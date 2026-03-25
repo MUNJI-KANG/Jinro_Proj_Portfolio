@@ -1,8 +1,20 @@
-2026-03-20 10:33:43,743 [WARNING] ai_server.router: Interest model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
-2026-03-20 10:33:43,745 [WARNING] ai_server.router: Focus model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
-2026-03-20 11:35:16,413 [WARNING] ai_server.router: Interest model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
-2026-03-20 11:35:16,413 [WARNING] ai_server.router: Focus model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
-2026-03-20 11:36:22,174 [WARNING] ai_server.router: Interest model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
-2026-03-20 11:36:22,176 [WARNING] ai_server.router: Focus model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
-2026-03-20 12:14:25,394 [WARNING] ai_server.router: Interest model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
-2026-03-20 12:14:25,396 [WARNING] ai_server.router: Focus model file was not found in F:\Portfolio\JINRO_AI_PORTFOLIO\JINRO_PROJ\ai_server\model
+2026-03-23 11:37:48,894 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-03-23 11:37:49,214 [INFO] ai_server.router: 디바이스 설정 완료: cpu
+2026-03-23 11:37:49,472 [INFO] ai_server.router: 흥미도 예측 모델 가중치 로드 완료: F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\app\api\..\model\interest_classifier_best.pth
+2026-03-23 11:37:49,484 [INFO] ai_server.router: MediaPipe 얼굴 인식 모듈 초기화 완료
+2026-03-23 11:37:49,484 [INFO] ai_server.router: 💻 AI 서버 집중도 모델 로드 중... 디바이스: cpu
+2026-03-23 11:37:49,611 [INFO] ai_server.router: ✅ 집중도 모델 로드 완료!
+2026-03-23 11:37:49,612 [INFO] ai_server.router: GPU OOM 방지용 세마포어 설정 완료 (최대 동시 작업 수: 1)
+2026-03-23 12:20:56,947 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-03-23 17:38:30,668 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+2026-03-23 17:38:30,872 [INFO] ai_server.router: 디바이스 설정 완료: cpu
+2026-03-23 17:38:31,136 [INFO] ai_server.router: 흥미도 예측 모델 가중치 로드 완료: F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\app\api\..\model\interest_classifier_best.pth
+2026-03-23 17:38:31,142 [INFO] ai_server.router: MediaPipe 얼굴 인식 모듈 초기화 완료
+2026-03-23 17:38:31,142 [INFO] ai_server.router: 💻 AI 서버 집중도 모델 로드 중... 디바이스: cpu
+2026-03-23 17:38:31,276 [INFO] ai_server.router: ✅ 집중도 모델 로드 완료!
+2026-03-23 17:38:31,277 [INFO] ai_server.router: GPU OOM 방지용 세마포어 설정 완료 (최대 동시 작업 수: 1)
+2026-03-23 17:38:43,683 [WARNING] tensorflow: From F:\JINRO_IS_BACK_PROJ\JINRO_PROJ\ai_server\.venv\lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+

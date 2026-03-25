@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import api, { BACKEND_BASE_URL } from "../../../services/app";
+import api from "../../../services/app";
 
 import styles from "../../../css/component_css/ReportAi.module.css";
 
@@ -86,9 +86,7 @@ const CReportAiSimple = ({ pageTitle, apiUrl }) => {
     //   }
     // ).catch((err) => console.error(err))
 
-    setVideoUrl(
-      `${BACKEND_BASE_URL}/counselor/ai_report/voice/file/${counselingId}`
-    );
+    setVideoUrl(`http://localhost:8000/counselor/ai_report/voice/file/${counselingId}`)
 
   };
 
@@ -120,10 +118,8 @@ const CReportAiSimple = ({ pageTitle, apiUrl }) => {
       (res) => res.data
     ).then(
       (res) => {
-        if (res.success) {
-          setSummary(res.summary || "");
-          setPrompt(res.prompt || "");
-        }
+        setSummary(res.ai_m_comment)
+        setPrompt(res.prompt)
       }
     ).catch(err => console.log(err))
 

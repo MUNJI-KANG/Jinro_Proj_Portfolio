@@ -24,7 +24,6 @@ function SVideo() {
   const recordedChunks = useRef([]);
   const cameraRef = useRef(null);
   const streamRef = useRef(null);
-  const onboardingAutoStartRef = useRef(false);
 
   const frontStartTimeRef = useRef(null);
   const frontFrameCountRef = useRef(0);
@@ -37,13 +36,16 @@ function SVideo() {
   const [webcamError, setWebcamError] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
   const [started, setStarted] = useState(false);
+  const [onboardingStartRequested, setOnboardingStartRequested] = useState(false);
   const [faceDetected, setFaceDetected] = useState(false);
   const [isFacingFront, setIsFacingFront] = useState(false);
   const [frontTime, setFrontTime] = useState(0);
   const [readyToStart, setReadyToStart] = useState(false);
   const [uploading, setUploading] = useState(false);
   const canGoSurvey = isGlobalOnboarding || videoEnded;
-  const showStartButton = isGlobalOnboarding || readyToStart;
+  const showStartButton = isGlobalOnboarding
+    ? webcamReady || webcamError
+    : readyToStart;
 
   useEffect(() => {
     let activeStream = null;
@@ -62,20 +64,12 @@ function SVideo() {
           setWebcamReady(true);
           setWebcamError(false);
 
-          if (isGlobalOnboarding) {
-            setReadyToStart(true);
-          }
         }
       } catch (error) {
         console.error("카메라 연결 실패:", error);
         setWebcamError(true);
         setWebcamReady(false);
 
-        if (isGlobalOnboarding) {
-          setTimeout(() => {
-            setReadyToStart(true);
-          }, 800);
-        }
       }
     };
 
@@ -139,19 +133,23 @@ function SVideo() {
       lostFaceCountRef.current = 0;
 
       const landmarks = results.multiFaceLandmarks[0];
-      const nose = landmarks[1];
-      const left = landmarks[234];
-      const right = landmarks[454];
-      const faceWidth = right.x - left.x;
 
-      if (faceWidth === 0) return;
+      let front = undefined;
+      if (landmarks) {
+        const nose = landmarks[1];
+        const left = landmarks[234];
+        const right = landmarks[454];
+        const faceWidth = right.x - left.x;
 
-      setFaceDetected(true);
+        if (faceWidth === 0) return;
 
-      const noseOffset = (nose.x - left.x) / faceWidth;
-      const yawFront = noseOffset > 0.15 && noseOffset < 0.85;
-      const pitchFront = nose.y > 0.35 && nose.y < 0.65;
-      const front = yawFront && pitchFront;
+        setFaceDetected(true);
+
+        const noseOffset = (nose.x - left.x) / faceWidth;
+        const yawFront = noseOffset > 0.15 && noseOffset < 0.85;
+        const pitchFront = nose.y > 0.35 && nose.y < 0.65;
+        front = yawFront && pitchFront;
+      }
 
       setIsFacingFront(front);
 
@@ -216,6 +214,28 @@ function SVideo() {
       setStarted(true);
     }
   }, [currentIndex, webcamReady]);
+
+  useEffect(() => {
+    if (!isGlobalOnboarding) {
+      return undefined;
+    }
+
+    const handleOnboardingStartRequest = () => {
+      setOnboardingStartRequested(true);
+    };
+
+    window.addEventListener(
+      "student-onboarding-video-confirmed",
+      handleOnboardingStartRequest
+    );
+
+    return () => {
+      window.removeEventListener(
+        "student-onboarding-video-confirmed",
+        handleOnboardingStartRequest
+      );
+    };
+  }, [isGlobalOnboarding]);
 
   const fetchVideo = async () => {
     try {
@@ -323,22 +343,22 @@ function SVideo() {
   };
 
   useEffect(() => {
-    if (!isGlobalOnboarding || !readyToStart || started) {
-      return undefined;
+    if (!isGlobalOnboarding || !onboardingStartRequested || started) {
+      return;
     }
 
-    if (onboardingAutoStartRef.current) {
-      return undefined;
+    if (!webcamReady && !webcamError) {
+      return;
     }
 
-    onboardingAutoStartRef.current = true;
-
-    const timeoutId = window.setTimeout(() => {
-      handleStart();
-    }, webcamReady ? 280 : 520);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [isGlobalOnboarding, readyToStart, started, webcamReady]);
+    handleStart();
+  }, [
+    isGlobalOnboarding,
+    onboardingStartRequested,
+    started,
+    webcamError,
+    webcamReady,
+  ]);
 
   const handleGoSurvey = async () => {
     if (uploading) return;
@@ -346,32 +366,24 @@ function SVideo() {
     setUploading(true);
 
     try {
+      // 1. 녹화 종료 및 영상 데이터(blob) 생성
       const blob = await stopRecording();
 
+      // 2. 웹캠 완전히 끄기
       if (webcamRef.current?.srcObject) {
         webcamRef.current.srcObject.getTracks().forEach((track) => track.stop());
         webcamRef.current.srcObject = null;
       }
 
-      if (!isGlobalOnboarding) {
-        const storedReportIds = JSON.parse(localStorage.getItem("reportIds") || "[]");
-        const currentReportId =
-          currentReportIds[currentIndex] || storedReportIds[currentIndex] || 1;
-        const counselingId =
-          currentCounselingId || localStorage.getItem("counselingId") || "1";
-
-        const formData = new FormData();
-        formData.append("file", blob, "video.webm");
-        formData.append("report_id", currentReportId);
-
-        await api.post(`/client/video/upload/${counselingId}`, formData);
-      }
-
+      // 3. 서버 업로드 X -> 바로 설문 페이지로 이동하면서 영상 데이터 전달
       navigate(`/student/survey/${categoryId}`, {
-        state: { currentIndex },
+        state: {
+          currentIndex,
+          videoBlob: blob // 🔥 핵심: 영상을 메모리에 들고 넘어갑니다.
+        },
       });
     } catch (error) {
-      console.error("영상 업로드 실패:", error);
+      console.error("영상 처리 실패:", error);
       setUploading(false);
       alert("영상 처리 중 문제가 발생했습니다. 다시 시도해 주세요.");
     }

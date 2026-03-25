@@ -54,7 +54,7 @@ def login_or_create_client(client_data: ClientCreate, request: Request, db: Sess
                 db.refresh(existing_client)
 
             request.session['client_id'] = existing_client.client_id
-
+            
             active_counseling = db.query(Counseling).filter(
                 Counseling.client_id == existing_client.client_id,
                 Counseling.complete_yn.in_([0,1,2])
@@ -144,7 +144,7 @@ def login_or_create_client(client_data: ClientCreate, request: Request, db: Sess
         raise HTTPException(status_code=500, detail=str(e))
     
 
-@router.get("/{client_id}")
+@router.get("/id/{client_id}")
 def get_client_detail(client_id: int):
     return {"message": f"{client_id}번 내담자 상세 정보 조회 API 입니다."}
     
@@ -248,6 +248,7 @@ def create_counselling_and_reports(
     db: Session = Depends(get_db)
 ):
     # 내담자(Client) ID 가져오기
+    print("좆",request.session.get('client_id'))
     client_id = request.session.get('client_id')
     if not client_id:
         raise HTTPException(status_code=401, detail="로그인이 만료되었거나 비정상적인 접근입니다.")
@@ -317,6 +318,7 @@ def complete_video_report(
     payload: ReportCompleteRequest, 
     db: Session = Depends(get_db)
 ):
+   
     client_id = request.session.get('client_id')
     if not client_id:
         raise HTTPException(status_code=401, detail="로그인이 만료되었거나 비정상적인 접근입니다.")
@@ -425,7 +427,7 @@ async def send_to_ai_server_background(
     try:
         async with httpx.AsyncClient(timeout=120.0) as http_client:
             response = await http_client.post(
-                f"{AI_SERVER_BASE_URL}/ai/upload-video",
+                f"{AI_SERVER_BASE_URL}/upload-video",
                 data={
                     "counseling_id": str(counseling_id),
                     "client_id": str(client_id),
@@ -504,12 +506,6 @@ async def trigger_ai_analysis(counseling_id: int, client_id: str):
             print(f"⚠️ AI 서버 연결 실패: {e}")
     
     
-    
-@router.get('/sesstion/clear')
-async def session_clear(request: Request):
-    request.session.clear()
-
-    return {}
 
 @router.post("/video/analyze")
 async def video_analyze():
@@ -520,7 +516,7 @@ async def video_analyze():
     async with httpx.AsyncClient() as client:
         try:
             response = await client.post(
-                f'{AI_SERVER_BASE_URL}/ai/video/analyze',
+                f'{AI_SERVER_BASE_URL}/video/analyze',
                 json={"video_path": video_path},
                 timeout=120.0,  # 120초 대기 (필요에 따라 조절)
                 )
@@ -746,7 +742,7 @@ async def process_analysis_background(counseling_id: int, client_id: str, db: Se
 
         # AI 서버에 지시서만 전송 (응답은 기다리지 않으므로 timeout을 아주 짧게 줍니다)
         async with httpx.AsyncClient() as cl:
-            await cl.post(f"{AI_SERVER_BASE_URL}/ai/start-analysis", json=payload, timeout=5.0)
+            await cl.post(f"{AI_SERVER_BASE_URL}/start-analysis", json=payload, timeout=5.0)
             
         print("✅ [백엔드] AI 서버에 분석 작업 지시 완료! (이제 백엔드는 대기하지 않습니다)")
 

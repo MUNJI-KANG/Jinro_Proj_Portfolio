@@ -28,8 +28,8 @@ import httpx
 
 router = APIRouter(prefix="/counselor", tags=["Counselor (상담사)"])
 
-BACKEND_BASE_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
-AI_SERVER_BASE_URL = os.getenv("AI_SERVER_URL", "http://127.0.0.1:8001")
+BACKEND_BASE_URL = os.getenv("BACKEND_URL")
+AI_SERVER_BASE_URL = os.getenv("AI_SERVER_URL")
 
 def get_db():
     db = SessionLocal()
@@ -180,10 +180,10 @@ async def set_recording_analyze(record_analyze: RecordingAnalyze,  db: Session =
         data = {}
         async with httpx.AsyncClient() as client:
             response = await client.post(
-                f'{AI_SERVER_BASE_URL}/ai/api/summarize',
+                f'{AI_SERVER_BASE_URL}/api/summarize',
                 json={
                     "text": report_ai_m.stt_text,
-                    **({"system_prompt": record_analyze.prompt} if record_analyze.prompt else {}),
+                    record_analyze.prompt and "system_prompt": record_analyze.prompt,
                     },
                 timeout=120.0,  # 120초 대기 (필요에 따라 조절)
                 )
@@ -197,11 +197,7 @@ async def set_recording_analyze(record_analyze: RecordingAnalyze,  db: Session =
 
         db.commit()
 
-        return {
-            "success": True,
-            "summary": report_ai_m.ai_m_comment,
-            "prompt": report_ai_m.prompt or "",
-        }
+        return {"success": True, "data": report_ai_m}       
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"대화 분석 오류: {str(e)}")
@@ -315,7 +311,7 @@ def send_audio_to_ai(counseling_id, file_bytes, filename, content_type, ai_repor
         }
 
         res = requests.post(
-            f"{AI_SERVER_BASE_URL}/ai/audio/upload/{counseling_id}",
+            f"{AI_SERVER_BASE_URL}/audio/upload/{counseling_id}",
             files=files,
             data={"ai_report": ai_report},
             timeout=120
@@ -549,7 +545,7 @@ async def get_ai_report_voice_file(counseling_id: int, request: Request):
         # 2. Server A로 Range 헤더를 포함하여 요청
         req = client.build_request(
             "GET", 
-            f"{AI_SERVER_BASE_URL}/ai/audio/load/{counseling_id}", 
+            f"{AI_SERVER_BASE_URL}/audio/load/{counseling_id}", 
             headers=req_headers,
             )
         r = await client.send(req, stream=True)
@@ -594,8 +590,7 @@ def get_ai_report(counseling_id: int, db: Session = Depends(get_db)):
             "success": True,
             "data": {
                 "ai_m_comment": report_ai_m.ai_m_comment,
-                "stt_text": report_ai_m.stt_text,
-                "prompt": report_ai_m.prompt or "",
+                "stt_text": report_ai_m.stt_text
             }
         }
 
@@ -1037,7 +1032,9 @@ from pathlib import Path
 @router.get("/local-videos/{counseling_id}")
 def get_local_videos(counseling_id: int):
 
-    video_dir = Path(__file__).resolve().parents[3] / "ai_server" / "videos" / str(counseling_id)
+    video_dir = Path(
+        "F:/JINRO_IS_BACK_PROJ/JINRO_PROJ/ai_server/videos"
+    ) / str(counseling_id)
 
     if not video_dir.exists():
         return {"success": True, "data": []}
@@ -1047,7 +1044,6 @@ def get_local_videos(counseling_id: int):
     for f in video_dir.glob("*.webm"):
 
         files.append({
-            "id": f.name,
             "name": f.name,
             "url": f"{counseling_id}/{f.name}"
         })
