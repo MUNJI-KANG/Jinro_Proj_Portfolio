@@ -378,8 +378,9 @@ res = client.beta.chat.completions.parse(
 
 ## 🎥 데모 영상
 
-- 프로젝트 데모 영상 : [데모 영상 링크] 추후 업로드 예정
-- 발표 자료: [PDF 링크] 추후 업로드 예정
+- 프로젝트 발표 영상 : [발표 영상] (https://www.youtube.com/watch?v=iKnmn_Ps-NU&list=PLedGoSru7949ULhxrVcR86nPq25uXOu1Q&index=2)
+- 프로젝트 Q&A 영상 : [Q&A] (https://www.youtube.com/watch?v=DbGTcnBE4lo&list=PLedGoSru7949ULhxrVcR86nPq25uXOu1Q&index=3)
+- 발표 자료: [발표 ppt] (F:\Portfolio\JINRO_AI_PORTFOLIO\Presentation\최종발표_jinro2.pptx)
 ---
 
 
